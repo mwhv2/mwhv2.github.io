@@ -97,7 +97,7 @@ p {
   content: "\2796";
 }
 .active, .collapsible:hover {
-  background-color:LigthGray;
+  background-color:LightGray;
 }
 .content {
   padding: 0 18px;
