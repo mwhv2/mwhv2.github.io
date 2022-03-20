@@ -1,6 +1,6 @@
 .head1 {
     font-family:serif;
-    font-size:40px;
+    font-size:xx-large;
     font-weight:bold;
     text-align:center;
     padding-top:10px;
@@ -23,7 +23,7 @@ td, th {
 }
 .sidenav {
   height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 160px; /* Set the width of the sidebar */
+  width: 10%; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 1; /* Stay on top */
   top: 0; /* Stay at the top */
@@ -36,7 +36,7 @@ td, th {
 .sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  font-size: 20px;
+  font-size: large;
   color: #818181;
   display: block;
 }
@@ -59,12 +59,11 @@ footer {
     padding-top:15px;
     padding-bottom:15px;
     text-align:center;
-    font-size:15px;
+    font-size:small;
 }
 .body_sec {
-    margin-left:400px;
-    margin-right:400px;
-    min-width:300px;
+    width:60%;
+    margin:auto;
 }
 .body_sec img{
     clear:left;
