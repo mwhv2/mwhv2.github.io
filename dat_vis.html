@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MWL - Data Visualizations</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="head1">Data Visualizations</div>
+    <hr style="width:59%;">
+</header>
+<div class="sidenav">
+    <a href="index.html">Home</a>
+    <a href="cv.html">Curriculum Vitae</a>
+    <a href="dis_codes.html">Dissertation Codes</a>
+    <a href="dat_vis.html">Data Visualizations</a>
+</div>
+<div class="body_sec">
+<h2>SunPy TimeSeries Data Summary*</h2>
+<h3>HTML-based Summary</h3>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/sunpy.timeseries.GBM.html" height="700" width="100%"></iframe>
+
+<p>Code available on my <a href="https://github.com/mwhv2/sunpy-git/blob/main/sunpy/timeseries/timeseriesbase.py" target="_blank">Github</a>. This data summary is best viewed within a Jupyter notebook. It is created via two functions: _text_summary and _repr_html_.</p>
+
+<h3>Alternate Plotly-based summary</h3>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/TimeSeries_Plotly.html" height="700" width="100%"></iframe>
+
+<p>Code available on my <a href="https://github.com/mwhv2/sunpy-git/blob/main/sunpy/timeseries/timeseriesbase.py" target="_blank">Github</a>. This version is called using the "summary" function.</p>
+
+<p><small>*These represent work currently in progress that have not yet been merged into the main SunPy library.</small></p>
+
+<h2>COVID-19 Data</h2>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/Covid19_Plotly.html" height="700" width="100%"></iframe>
+
+<button type="button" class="collapsible">Code</button>
+<div class="content">
+<pre class="prettyprint">
+# This notebook uses COVID-19 data from the following Github page which
+# is updated daily from the Johns Hopkins Univserity CSSE (specifically,
+# the countries-aggregated dataset): 
+# https://github.com/datasets/covid-19
+# It is based on a tutorial at the following URL:
+# https://towardsdatascience.com/visualizing-covid-19-data-beautifully-in-python-in-5-minutes-or-less-affc361b2c6a
+
+import pandas as pd
+import plotly.graph_objects as go
+from plotly.offline import iplot
+import plotly.io as pio
+
+# Load the data into a dataframe and select a subset of countries to examine.
+# Countries can be added or removed from this list (just be sure to update the 
+# traces on the plot below).
+df = pd.read_csv('https://raw.githubusercontent.com/datasets/covid-19/master/data/countries-aggregated.csv', 
+                 parse_dates=['Date'])
+countries = ['Canada', 'Germany', 'United Kingdom', 'US', 'France', 'South Africa', 'Brazil', 'Korea, South',
+             'Ethiopia', 'Japan']
+df = df[df['Country'].isin(countries)]
+
+# Restructure the data into separate dataframes for cases and deaths,
+# and set the Date column as the index.
+df1 = df.pivot(index='Date', columns='Country', values='Confirmed')
+df2 = df.pivot(index='Date', columns='Country', values='Deaths')
+countries = list(df1.columns)
+covid = df1.reset_index('Date')
+deaths = df2.reset_index('Date')
+covid.set_index(['Date'], inplace=True)
+deaths.set_index(['Date'], inplace=True)
+covid.columns = countries
+deaths.columns = countries
+
+n,b = covid.shape
+
+# Create 7-day rolling average dataframes over the entire cases and deaths dataset. 
+rav = pd.DataFrame(covid[countries].values[1:]-covid[countries].values[:n-1])
+rav.columns = countries
+date = pd.DataFrame(covid.index[1:])
+date[countries] = rav
+date.set_index(['Date'],inplace=True)
+rav_cases = date.rolling(window=7)[countries].mean()
+
+rav2 = pd.DataFrame(deaths[countries].values[1:]-deaths[countries].values[:n-1])
+rav2.columns = countries
+date2 = pd.DataFrame(covid.index[1:])
+date2[countries] = rav2
+date2.set_index(['Date'],inplace=True)
+rav_deaths = date2.rolling(window=7)[countries].mean()
+
+# Create a visualization where Cases and Deaths can be viewed via buttons.
+fig = go.Figure()
+
+dates = rav_cases.index
+
+fig.add_trace(go.Scatter(x=dates, y=rav_cases['US'], name='US', hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_cases['Brazil'], name='Brazil', hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_cases['Japan'], name='Japan', hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_cases['Germany'], name='Germany', hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_cases['United Kingdom'], name='United Kingdom', hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_cases['Korea, South'], name='South Korea', hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_cases['Ethiopia'], name='Ethiopia', hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_cases['South Africa'], name='South Africa', hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_deaths['US'], name='US', visible=False, hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_deaths['Brazil'], name='Brazil', visible=False, hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_deaths['Japan'], name='Japan', visible=False, hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_deaths['Germany'], name='Germany', visible=False, hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_deaths['United Kingdom'], name='United Kingdom', visible=False, hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_deaths['Korea, South'], name='South Korea', visible=False, hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_deaths['Ethiopia'], name='Ethiopia', visible=False, hovertemplate="%{y:.2f}"))
+fig.add_trace(go.Scatter(x=dates, y=rav_deaths['South Africa'], name='South Africa', visible=False, hovertemplate="%{y:.2f}"))
+
+
+fig.update_layout(updatemenus = list([
+    dict(type="buttons",direction="left",yanchor="top",y=1.1,x=0.1,
+         active=0,
+         showactive = True,
+         buttons=list([   
+            dict(label = "Cases",
+                 method = "update",
+                 args = [{"visible": [True, True,True,True,True,True,True,True,False,False,False,False,False,False,False,False]},
+                         {'yaxis':{'title':"7-day Avg. of Cases"}}]),
+            dict(label = "Deaths",
+                 method = "update",
+                 args = [{"visible": [False, False,False,False,False,False,False,False,True,True,True,True,True,True,True,True]},
+                         {'yaxis':{'title':"7-day Avg. of Deaths"}}]) 
+            ]))])
+                 )
+
+fig.update_layout(dict(title="COVID-19 Data",
+              showlegend=True,
+              xaxis=dict(title="Date"),
+              hovermode="x unified",template="seaborn"
+             )
+                 )
+
+fig.add_annotation(xref="paper",x="1",yref="paper",y="-0.1",
+                   text="""<a href='https://github.com/datasets/covid-19'>Source: JHU CSSE COVID-19 Data </a>""",
+                   showarrow=False)
+
+# fig.show()
+pio.write_html(fig,file="Covid19_Plotly.html")
+
+</pre>
+</div>
+
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/Covid19_WorldMap_Cases_PerCapita.html" height="600" width="100%"></iframe>
+
+<button type="button" class="collapsible">Code</button>
+<div class="content">
+<pre class="prettyprint">
+# This notebook creates a visual world map that shows the change in the total number
+# of Covid cases/deaths per month per capita. It uses the countryinfo Python library 
+# to retrieve ISO Alpha-3 codes and population information. 
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+from countryinfo import CountryInfo
+
+# Load the countries-aggregated COVID dataset
+df = pd.read_csv('https://raw.githubusercontent.com/datasets/covid-19/master/data/countries-aggregated.csv', 
+                 parse_dates=['Date'])
+df = df.drop(labels='Recovered', axis=1)
+
+# Restructure the data into separate dataframes for cases and deaths,
+# and set the Date column as the index. Then calculate monthly totals
+# of cases and deaths for each country.
+df1 = df.pivot(index='Date', columns='Country', values='Confirmed')
+df2 = df.pivot(index='Date', columns='Country', values='Deaths')
+countries = list(df1.columns)
+covid = df1.reset_index('Date')
+deaths = df2.reset_index('Date')
+covid.set_index(['Date'], inplace=True)
+deaths.set_index(['Date'], inplace=True)
+covid.columns = countries
+deaths.columns = countries
+date = covid.index[1:]
+
+n,b = covid.shape
+covid = pd.DataFrame(covid[countries].values[1:]-covid[countries].values[:n-1])
+covid.columns = countries
+covid.insert(0, 'Date', date)
+covid.set_index(['Date'], inplace=True)
+deaths = pd.DataFrame(deaths[countries].values[1:]-deaths[countries].values[:n-1])
+deaths.columns = countries
+deaths.insert(0, 'Date', date)
+deaths.set_index(['Date'], inplace=True)
+covid = covid.groupby(pd.PeriodIndex(covid.index, freq="M")).sum()
+deaths = deaths.groupby(pd.PeriodIndex(deaths.index, freq="M")).sum()
+
+# Use countryinfo to retrieve ISO Alpha-3 country codes
+# to be used later in the choropleth plot. Print and drop countries 
+# which the search cannot identify fromm the dataframes. 
+# Divide the monthly case/death totals by the populations to
+# estimate shares of populations with Covid cases or deaths.
+print("Converting country names for cases...")
+for i in covid.columns:
+    try:
+        cy = CountryInfo(i)
+        iso = cy.iso()['alpha3']
+        pop = cy.population()
+        covid.rename(columns={i:iso}, inplace=True)
+        covid[iso] = covid[iso].div(pop)
+        covid[iso] = covid[iso].mul(100)
+    except KeyError:
+        covid.drop(columns=i, inplace=True)
+        countries.remove(i)
+        print(f"No record for {i}. Dropping from dataframe.")
+
+print("Converting country names for deaths...")
+for i in deaths.columns:
+    try:
+        cy = CountryInfo(i)
+        iso = cy.iso()['alpha3']
+        pop = cy.population()
+        deaths.rename(columns={i:iso}, inplace=True)
+        deaths[iso] = deaths[iso].div(pop)
+        deaths[iso] = deaths[iso].mul(100)
+    except KeyError:
+        deaths.drop(columns=i, inplace=True)
+        print(f"No record for {i}. Dropping from dataframe.")      
+print("Done")
+
+# Restructure the data frames so that both country names and
+# ISO Alpha-3 codes are given. 
+data = covid.values
+dates = covid.index
+iso_alpha = covid.columns
+covid = pd.DataFrame(data=data, columns=[countries, iso_alpha], index=dates)
+
+data2 = deaths.values
+dates2 = deaths.index
+iso_alpha2 = deaths.columns
+deaths = pd.DataFrame(data=data2, columns=[countries, iso_alpha2], index=dates)
+
+# Melt the dataframes into a form which choropleth can use.
+covid = covid.melt(var_name=['Country', 'iso_alpha'], value_name='Cases', ignore_index=False)
+deaths = deaths.melt(var_name=['Country', 'iso_alpha'], value_name='Deaths', ignore_index=False)
+
+# Convert the dates from PeriodIndex to strings for choropleth
+covid.set_index(covid.index, inplace=True)
+covid.index = covid.index.strftime('%Y-%m')
+
+deaths.set_index(deaths.index, inplace=True)
+deaths.index = deaths.index.strftime('%Y-%m')
+
+# Create the plot for Covid cases
+fig = px.choropleth(covid, locations="iso_alpha",
+                    color="Cases", 
+                    color_continuous_scale=px.colors.sequential.Plasma,
+                    hover_name="Country",hover_data=["Cases"],
+                    animation_frame=covid.index,
+                    title="Share of Population with Covid Cases Per Month",
+                    template="seaborn")
+
+fig.add_annotation(xref="paper",x="1",yref="paper",y="-0.1",
+                   text="""<a href='https://github.com/datasets/covid-19'>Source: JHU CSSE COVID-19 Data </a>""",
+                   showarrow=False)
+
+fig.show()
+pio.write_html(fig,file="Covid19_WorldMap_Cases_PerCapita.html")
+
+# Create the plot for Covid deaths
+fig = px.choropleth(deaths, locations="iso_alpha",
+                    color="Deaths", 
+                    color_continuous_scale=px.colors.sequential.Plasma,
+                    hover_name="Country",hover_data=["Deaths",deaths.index],
+                    animation_frame=deaths.index,
+                    title="Share of Population Covid Deaths Per Month",
+                    template="seaborn")
+
+fig.add_annotation(xref="paper",x="1",yref="paper",y="-0.1",
+                   text="""<a href='https://github.com/datasets/covid-19'>Source: JHU CSSE COVID-19 Data </a>""",
+                   showarrow=False)
+
+fig.show()
+pio.write_html(fig,file="Covid19_WorldMap_Deaths_PerCapita.html")
+
+</pre>
+</div>
+
+</div>
+<footer>Last updated March 2022.</footer>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+</body>
+</html>
