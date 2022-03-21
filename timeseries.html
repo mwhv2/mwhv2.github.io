@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TimeSeries Summary</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="head1">TimeSeries Summary</div>
+    <hr style="width:59%;">
+</header>
+
+<div class="body_sec">
+<h3>HTML-based Summary</h3>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/sunpy.timeseries.GBM.html" height="700" width="100%"></iframe>
+
+<p>This data summary is best viewed within a Jupyter notebook. It is created via two functions: _text_summary and _repr_html_. The above html document represents the quicklook view.</p>
+
+<h3>Alternate Plotly-based summary</h3>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/TimeSeries_Plotly.html" height="700" width="100%"></iframe>
+
+<p>This version is called using the "summary" function.</p>
+
+</body>
+</html>
