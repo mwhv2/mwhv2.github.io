@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SunPy Interact</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="head1">SunPy Interact</div>
+    <hr style="width:59%;">
+</header>
+
+<div class="body_sec">
+<h3>Map Objects</h3>
+<p>The Map examples below use the following SunPy sample data: AIA_171_IMAGE and AIA_193_IMAGE.</p>
+<h4>Basic Map View - "plotly_map"</h4>
+<p>The Plotly Express function <a href="https://plotly.com/python/imshow/" target="_blank">Imshow</a> is used to create a Map plot similar to that of Matplotlib. A colorscale can be applied, but will slow down the performance of the interactive figure.</p>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/map.htm" height="600" width="100%"></iframe>
+<code>plotly_map(aia171,clip_interval=(1,99))</code>
+
+<h4>Map with Contours and HGS Grid</h4>
+<p>The plotly_map function can also overlay a heliographic Stonyhurst coordinate (HGS) grid. Your cursor will snap to the grid lines and display the HGS coordinates as well as heliographic Carrington coordinates (HGC). The contours method of a Map object can be passed as an argument to plotly_map to display contours. Compare to this <a href="https://docs.sunpy.org/en/stable/generated/gallery/map/map_contouring.html" target="_blank">SunPy example</a>.</p>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/map_contourgrid.htm" height="600" width="100%"></iframe>
+<code>plotly_map(aia193, clip_interval=(1,99), draw_grid=True, contours=50000)</code>
+
+<h4>Map Summary</h4>
+<p>You can also display a summary table side by side with the Map plot. (Note: currently the Map is upside down. The coordinates in the hover info are correct.)
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/map_summary.htm" height="700" width="100%"></iframe>
+<code>plotly_map(aia171, clip_interval=(1,99), summary=True, draw_grid=True)</code>
+
+<h3>TimeSeries Objects</h3>
+<p>The examples in this section use the following SunPy sample data: GOES_XRS_TIMESERIES and GBM_TIMESERIES.</p>
+<h4>Basic Timeseries View - "plotly_ts"</h4>
+<p>TimeSeries data is plotted using the Plotly function <a href="https://plotly.com/python/line-and-scatter/#scatter-and-line-plots-with-goscatter" target="_blank">Scatter</a> (specifically, this uses the Plotly <a href="https://plotly.com/python/graph-objects/" target="_blank">Graph Objects class</a> instead of the Plotly Express module). You can toggle data from each channel by clicking on its name in the legend.</p>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/timeseries.htm" height="600" width="100%"></iframe>
+<code>plotly_ts(goes_lc)</code>
+
+<h4>TimeSeries Findpeaks</h4>
+<p>The plot_ts function has a built-in peak finding method. This method is the same as that used in the following <a href="https://docs.sunpy.org/en/stable/generated/gallery/time_series/timeseries_peak_finding.html" target="_blank">SunPy example</a>. In addition, there is a gradient argument that will display the NumPy gradient of each channel in the timeseries object.</p>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/ts_findpeaks.htm" height="600" width="100%"></iframe>
+<code>my_ts = goes_lc.truncate('2011/06/07 06:10', '2011/06/07 09:00') <br> plotly_ts(my_ts, peaks=1e-7)</code>
+
+<h4>TimeSeries Summary - "ts_summary"</h4>
+<p>The summary display for a TimeSeries object has a separate function unlike the Map summary above. It uses <a href="https://plotly.com/python/subplots/" target="_blank">Plotly's Subplots</a> and combines three different types of Plotly traces: Scatter, <a href="https://plotly.com/python/histograms/" target="_blank">Histogram</a>, and <a href="https://plotly.com/python/table/" target="_blank">Table</a>. Click the dropdown menu to change the channel whose data is plotted in the scatter plot and histogram.</p>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
+src="Images/ts_summary.htm" height="700" width="100%"></iframe>
+<code>ts_summary(gbm)</code>
+
+<p></p>
+
+</body>
+</html>
