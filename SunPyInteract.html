@@ -20,13 +20,13 @@ src="Images/map.htm" height="600" width="100%"></iframe>
 <code>plotly_map(aia171,clip_interval=(1,99))</code>
 
 <h4>Map with Contours and HGS Grid</h4>
-<p>The plotly_map function can also overlay a heliographic Stonyhurst coordinate (HGS) grid. Your cursor will snap to the grid lines and display the HGS coordinates as well as heliographic Carrington coordinates (HGC). The contours method of a Map object can be passed as an argument to plotly_map to display contours. Compare to this <a href="https://docs.sunpy.org/en/stable/generated/gallery/map/map_contouring.html" target="_blank">SunPy example</a>.</p>
+<p>The plotly_map function can also overlay a heliographic Stonyhurst coordinate (HGS) grid. Your cursor will snap to the grid lines and display the HGS coordinates as well as heliographic Carrington coordinates (HGC). The contours method of a Map object can be passed as an argument to plotly_map to display contours. Contours are drawn on the plot as a scatter layer in red lines (plotly calls the individual sets of data being plotted "traces"). The hover info for the contours shows the HPC coordinates of the contours. Compare to this <a href="https://docs.sunpy.org/en/stable/generated/gallery/map/map_contouring.html" target="_blank">SunPy example</a>.</p>
 <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
 src="Images/map_contourgrid.htm" height="600" width="100%"></iframe>
 <code>plotly_map(aia193, clip_interval=(1,99), draw_grid=True, contours=50000)</code>
 
 <h4>Map Summary</h4>
-<p>You can also display a summary table side by side with the Map plot. (Note: currently the Map is upside down. The coordinates in the hover info are correct.)
+<p>You can also display a summary table side by side with the Map plot.
 <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
 src="Images/map_summary.htm" height="700" width="100%"></iframe>
 <code>plotly_map(aia171, clip_interval=(1,99), summary=True, draw_grid=True)</code>
