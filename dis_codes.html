@@ -2,18 +2,24 @@
 <html>
 <head>
     <title>MWL - Dissertation Codes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="container">
 <header>
-    <div class="head1">Dissertation Codes</div>
-    <hr style="width:59%;">
+    <div class="head1">Matt Wentzel-Long</div>
 </header>
-<div class="sidenav">
-  <a href="index.html">Home</a>
-  <a href="cv.html">Curriculum Vitae</a>
-  <a href="dis_codes.html">Dissertation Codes</a>
-  <a href="dat_vis.html">Data Visualizations</a>
+<nav class="navbar navbar-expand navbar-light bg-white justify-content-between">
+  <div class="container-fluid">
+      <div class="navbar-nav">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cv.html">Curriculum Vitae</a>
+        <a class="nav-link" href="dis_codes.html""><b>Dissertation Codes</b></a>
+        <a class="nav-link" href="dat_vis.html">Data Visualizations</a>
+      </div>
+  </div>
+</nav>
 </div>
 
 <div class="body_sec">
@@ -133,7 +139,7 @@ src="Images/HRD_errors.html" height="600" width="100%"></iframe>
 <pre class="prettyprint">
 # This Jupyter notebook creates an interactive Hertzsprung-Russell diagram which displays different
 # groups of young stars (based on their youth indicators). The background image of pre-main-sequence
-# tracks and isochrones will distort if zoomed.
+# tracks and isochrones will distort if zoomed (giviving incorrect age/mass estimates).
 
 # Import libraries
 import numpy as np
@@ -672,7 +678,7 @@ pfile.close()
 </div>
 
 </div>
-<footer>Last updated March 2022.</footer>
+<footer>Last updated June 2023.</footer>
 
 <script>
 var coll = document.getElementsByClassName("collapsible");

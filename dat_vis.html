@@ -2,34 +2,39 @@
 <html>
 <head>
     <title>MWL - Data Visualizations</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="container">
 <header>
-    <div class="head1">Data Visualizations</div>
-    <hr style="width:59%;">
+    <div class="head1">Matt Wentzel-Long</div>
 </header>
-<div class="sidenav">
-    <a href="index.html">Home</a>
-    <a href="cv.html">Curriculum Vitae</a>
-    <a href="dis_codes.html">Dissertation Codes</a>
-    <a href="dat_vis.html">Data Visualizations</a>
+<nav class="navbar navbar-expand navbar-light bg-white justify-content-between">
+  <div class="container-fluid">
+      <div class="navbar-nav">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cv.html">Curriculum Vitae</a>
+        <a class="nav-link" href="dis_codes.html"">Dissertation Codes</a>
+        <a class="nav-link" href="dat_vis.html"><b>Data Visualizations</b></a>
+      </div>
+  </div>
+</nav>
 </div>
 <div class="body_sec">
 <h2>SunPy TimeSeries Data Summary</h2>
 <h3>HTML-based Summary</h3>
 <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
-src="Images/sunpy.timeseries.GBM.html" height="760" width="100%"></iframe>
+src="Images/sunpy.timeseries.GBM.html" height="700" width="100%"></iframe>
 
 <p>Code available on my <a href="https://github.com/mwhv2/sunpy-git/blob/main/sunpy/timeseries/timeseriesbase.py" target="_blank">Github</a>. This data summary is best viewed within a Jupyter notebook. It is created via two functions: _text_summary and _repr_html_.</p>
 
-<h3>Alternate Plotly-based summary*</h3>
+<h3>Alternate Plotly-based summary</h3>
 <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
 src="Images/TimeSeries_Plotly.html" height="700" width="100%"></iframe>
 
-<p>This alternate summary can be added to the "timeseriesbase.py" code of the TimeSeries object. It is available <a href="https://github.com/mwhv2/SunPyInteract" target="_blank">here</a>.</p>
+<p>This alternate summary can be added to the "timeseriesbase.py" code of the TimeSeries object. It is available <a href="https://github.com/mwhv2/mwhv2.github.io/blob/main/plotly_summary.py" target="_blank">here</a>.</p>
 
-<p><small>*This work is not part of the main SunPy library.</small></p>
 
 <h2>COVID-19 Data</h2>
 <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless"
@@ -281,7 +286,7 @@ pio.write_html(fig,file="Covid19_WorldMap_Deaths_PerCapita.html")
 </div>
 
 </div>
-<footer>Last updated March 2022.</footer>
+<footer>Last updated June 2023.</footer>
 
 <script>
 var coll = document.getElementsByClassName("collapsible");

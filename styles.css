@@ -21,36 +21,6 @@ td, th {
   text-align: left;
   padding: 8px;
 }
-.sidenav {
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 10%; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
-}
-
-/* The navigation menu links */
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: large;
-  color: #818181;
-  display: block;
-}
-.sidenav p {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 10px;
-  color: #818181;
-  position:relative;
-}
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-  color: #111;
-}
 footer {
     width: 100%;
     bottom: 0;
@@ -97,15 +67,11 @@ p {
   content: "\2796";
 }
 .active, .collapsible:hover {
-  background-color:LightGray;
+  background-color:LigthGray;
 }
 .content {
   padding: 0 18px;
   display: none;
   overflow: hidden;
   background-color: #f1f1f1;
-}
-code {
-  background-color:LightGray;
-  padding: 2px;
 }
